@@ -82,7 +82,7 @@ body{
     width: 100%;
     padding: 12px 20px;
     border: 1px solid #dfe1e5;
-    border-radius: 24px;
+    border-radius: 15px;
     font-size: 16px;
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -118,7 +118,7 @@ body{
     text-align: left;
     padding: 5px 0;
     margin-top: -5px; /* Re-added for seamless merge with search input */
-    margin-left: 16px;
+    margin-left: 14px;
 }
 
 .suggestion-item{
