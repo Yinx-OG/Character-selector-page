@@ -3,32 +3,45 @@ console.log("My Custom Script is running!")
 function setBackgroundBasedOnTime(){
     const body = document.body;
     const currentHour = new Date().getHours();
+    // NEW: Get the background overlay element
+    const backgroundOverlay = document.querySelector('.background-overlay');
 
-    body.classList.remove('dawn-bg', 'day-bg', 'dusk-bg', 'night-bg')
+    // It's good practice to remove these classes from body, though they no longer set background-image in CSS
+    body.classList.remove('dawn-bg', 'day-bg', 'dusk-bg', 'night-bg');
+
+    let backgroundImagePath = ''; // To store the path for the background image
+    let bodyTextColor = ''; // To store the color that will be applied to body.style.color
 
     if (currentHour >=5 && currentHour < 12){
-        body.classList.add('dawn-bg');
+        backgroundImagePath = 'url("bg_img/dawn_bg.jpg")';
+        bodyTextColor = '#2c3e50';
+        body.classList.add('dawn-bg'); // Keep class on body for potential other styles
     } else if (currentHour >=12 && currentHour < 18){
+        backgroundImagePath = 'url("bg_img/day_bg.jpg")';
+        bodyTextColor = '#34495e';
         body.classList.add('day-bg');
     } else if (currentHour >=18 && currentHour < 21){
+        backgroundImagePath = 'url("bg_img/dusk_bg.jpg")';
+        bodyTextColor = '#34495e';
         body.classList.add('dusk-bg');
     } else {
+        backgroundImagePath = 'url("bg_img/night_bg.jpg")';
+        bodyTextColor = 'black'; // Your preferred black for night
         body.classList.add('night-bg');
     }
 
+    // Apply the background image to the new overlay element
     if (backgroundOverlay) {
         backgroundOverlay.style.backgroundImage = backgroundImagePath;
     }
 
-    if (currentHour >= 18 || currentHour < 6){ 
-        body.style.color = '#ecf0f1';
-    } else {
-        body.style.color = '#333';
-    }
+    // Apply the body text color directly as per your existing working code
+    body.style.color = bodyTextColor;
 }
 
 setBackgroundBasedOnTime();
-setInterval(setBackgroundBasedOnTime, 1000 * 60 * 60);
+setInterval(setBackgroundBasedOnTime, 1000 * 60 * 60); // Keep hourly update
+
 
 const searchInput = document.querySelector('.search-input');
 const suggestionsDropdown = document.querySelector('.suggestions-dropdown');
@@ -45,16 +58,14 @@ function updateButtonState() {
         gotoPageBtn.disabled = false;
         gotoPageBtn.style.opacity = '1';
         gotoPageBtn.style.pointerEvents = 'auto';
-        gotoPageBtn.style.display = 'block'; 
-
+        gotoPageBtn.style.display = 'block';
     } else {
         gotoPageBtn.disabled = true;
         gotoPageBtn.style.opacity = '0.5';
         gotoPageBtn.style.pointerEvents = 'none';
-        gotoPageBtn.style.display = 'none'; 
+        gotoPageBtn.style.display = 'none';
     }
 }
-
 
 updateButtonState();
 
@@ -141,11 +152,9 @@ searchInput.addEventListener('input', function(){
     const searchTerm = this.value.toLowerCase();
     suggestionsDropdown.innerHTML = '';
     selectedCharDisplay.style.display = 'none';
-    gotoPageBtn.disabled = true;
-    gotoPageBtn.style.opacity = '0.5';
-    gotoPageBtn.style.pointerEvents = 'none';
-    gotoPageBtn.style.display = 'none'
-    selectedCharacterData = null; 
+
+    selectedCharacterData = null; // Clear selected data when typing
+    updateButtonState(); // Update button state immediately based on cleared selection
 
     if (searchTerm.length === 0){
         suggestionsDropdown.style.display = 'none';
@@ -157,39 +166,30 @@ searchInput.addEventListener('input', function(){
     );
 
     if (filteredSuggestions.length > 0){
-        filteredSuggestions.forEach(charObj => { 
+        filteredSuggestions.forEach(charObj => {
             const suggestionItem = document.createElement('div');
             suggestionItem.classList.add('suggestion-item');
 
-           
             const charImage = document.createElement('img');
             charImage.src = charObj.image;
             charImage.alt = charObj.name;
             suggestionItem.appendChild(charImage);
 
-           
             const charNameSpan = document.createElement('span');
             charNameSpan.textContent = charObj.name;
             suggestionItem.appendChild(charNameSpan);
 
-          
             suggestionItem.addEventListener('click', function(){
-                searchInput.value = charObj.name; 
-                suggestionsDropdown.style.display = 'none'; 
-               
+                searchInput.value = charObj.name;
+                suggestionsDropdown.style.display = 'none';
+
                 selectedCharImage.src = charObj.image;
                 selectedCharImage.alt = charObj.name;
                 selectedCharName.textContent = charObj.name;
                 selectedCharDisplay.style.display = 'flex';
-                
-                 selectedCharacterData = charObj; 
-                updateButtonState(); 
-          
 
-                selectedCharacterData = charObj;
-                gotoPageBtn.disabled = false;
-                gotoPageBtn.style.opacity = '1';
-                gotoPageBtn.style.pointerEvents = 'auto';
+                selectedCharacterData = charObj; // Set selected data
+                updateButtonState(); // Update button state after selection
             });
 
             suggestionsDropdown.appendChild(suggestionItem);
@@ -203,12 +203,14 @@ searchInput.addEventListener('input', function(){
 document.addEventListener('click', function(event){
     if (!suggestionsDropdown.contains(event.target) && event.target !== searchInput){
         suggestionsDropdown.style.display = 'none';
-        if (selectedCharacterData === null || searchInput.value !== selectedCharacterData.name) {
-             selectedCharDisplay.style.display = 'none';
-             gotoPageBtn.disabled = true;
-             gotoPageBtn.style.opacity = '0.5';
-             gotoPageBtn.style.pointerEvents = 'none';
+        // Check if the input value still matches a selected character, otherwise clear it.
+        if (selectedCharacterData && searchInput.value === selectedCharacterData.name) {
+            // Do nothing, keep selected state and button visible
+        } else {
+            selectedCharDisplay.style.display = 'none';
+            selectedCharacterData = null; // Clear selected data
         }
+        updateButtonState(); // Update button state based on final selectedCharacterData
     }
 });
 
