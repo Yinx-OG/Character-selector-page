@@ -1,13 +1,22 @@
-body{
-    background-color: white;
-    color: #333;
+/* Universal Box-Sizing Reset - Keep this at the very top */
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
 
+body{
+    background-color: white; /* Keep this for fallback */
+    color: #333; /* This will be overridden by JS, but good default */
     font-family: 'Electrolize', sans-serif;
 
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+    /* REMOVED ALL BACKGROUND PROPERTIES FROM BODY */
+    /* background-repeat: no-repeat; */
+    /* background-position: center center; */
+    /* background-size: cover; */
+    /* background-attachment: fixed; */
+    /* transition: background-image 1s ease-in-out; */
 
     min-height: 100vh;
     margin: 0;
@@ -17,10 +26,9 @@ body{
     align-items: center;
     text-align: center;
     padding: 20px;
-
-    transition: background-image 1s ease-in-out;
 }
 
+/* Background Overlay for static background on mobile */
 .background-overlay {
     position: fixed;
     top: 0;
@@ -30,28 +38,29 @@ body{
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    z-index: -1; 
-    transition: background-image 1s ease-in-out; 
+    z-index: -1;
+    transition: background-image 1s ease-in-out;
 }
 
+/* These classes should now ONLY define text color if needed, as JS sets background-image on .background-overlay */
 .dawn-bg{
-    background-image: url('bg_img/dawn_bg.jpg');
+    /* background-image: url('bg_img/dawn_bg.jpg'); /* REMOVED */
     color: #2c3e50;
 }
 
 .day-bg{
-    background-image: url('bg_img/day_bg.jpg');
+    /* background-image: url('bg_img/day_bg.jpg'); /* REMOVED */
     color: #34495e;
 }
 
 .dusk-bg{
-    background-image: url('bg_img/dusk_bg.jpg');
+    /* background-image: url('bg_img/dusk_bg.jpg'); /* REMOVED */
     color: #34495e;
 }
 
 .night-bg{
-    background-image: url('bg_img/night_bg.jpg');
-    color: #2c3e50;
+    /* background-image: url('bg_img/night_bg.jpg'); /* REMOVED */
+    color: black; /* Your preferred black for night */
 }
 
 .logo{
@@ -65,6 +74,7 @@ body{
     max-width: 580px;
     margin-top: 1px;
     transform: translateY(-40px);
+    padding-bottom: 5px; /* Re-added for proper spacing */
 }
 
 .search-input{
@@ -77,6 +87,7 @@ body{
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    background-color: white; /* Ensure consistent white background */
 }
 
 .search-input:focus{
@@ -91,10 +102,10 @@ body{
 
 .suggestions-dropdown{
     position: absolute;
-    transform: translateX(20px);
+    /* CRITICAL FIX: REMOVED transform: translateX(20px); This was causing the shift! */
     top: 100%;
     left: 0;
-    width: 100%;
+    width: 93%;
     max-height: 200px;
     overflow-y: auto;
     background-color: white;
@@ -106,6 +117,8 @@ body{
     display: none;
     text-align: left;
     padding: 5px 0;
+    margin-top: -5px; /* Re-added for seamless merge with search input */
+    margin-left: 16px;
 }
 
 .suggestion-item{
@@ -136,10 +149,10 @@ body{
     justify-content: center;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 0.2); 
-    border-radius: 24px; 
-    color: var(--body-color, #ecf0f1); 
-    font-size: 1.4em; 
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    color: var(--body-color, #ecf0f1);
+    font-size: 1.4em;
     font-weight: bold;
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -147,11 +160,10 @@ body{
     width: 100%;
     max-width: 580px;
     transform: translateY(-20px);
-    
+
     transition: all 0.3s ease-in-out;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    font-family: 'Electrolize', sans-serif; 
-    
+    font-family: 'Electrolize', sans-serif;
 }
 
 .selected-char-img {
@@ -179,21 +191,21 @@ body{
     border: none;
     border-radius: 24px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Removed transform from transition */
     opacity: 0.5;
     pointer-events: none;
-    transform: translateY(-70px); 
-    font-family: 'Electrolize', sans-serif; 
+    transform: translateY(-70px);
+    font-family: 'Electrolize', sans-serif;
 }
 
-.goto-page-button:hover:not([disabled]) { 
+.goto-page-button:hover:not([disabled]) {
     background-color: #45a049;
-    transform: translateY(-72px); 
+    /* Removed transform here as base transform is kept static for consistency */
 }
 
 .goto-page-button[disabled] {
-    cursor: not-allowed; 
-    opacity: 0.3; 
+    cursor: not-allowed;
+    opacity: 0.3;
 }
 
 h1{
