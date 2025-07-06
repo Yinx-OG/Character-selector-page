@@ -16,6 +16,10 @@ function setBackgroundBasedOnTime(){
         body.classList.add('night-bg');
     }
 
+    if (backgroundOverlay) {
+        backgroundOverlay.style.backgroundImage = backgroundImagePath;
+    }
+
     if (currentHour >= 18 || currentHour < 6){ 
         body.style.color = '#ecf0f1';
     } else {
@@ -24,6 +28,7 @@ function setBackgroundBasedOnTime(){
 }
 
 setBackgroundBasedOnTime();
+setInterval(setBackgroundBasedOnTime, 1000 * 60 * 60);
 
 const searchInput = document.querySelector('.search-input');
 const suggestionsDropdown = document.querySelector('.suggestions-dropdown');
@@ -34,6 +39,24 @@ const selectedCharName = document.getElementById('selected-char-name');
 
 const gotoPageBtn = document.getElementById('goto-page-btn');
 let selectedCharacterData = null;
+
+function updateButtonState() {
+    if (selectedCharacterData && searchInput.value === selectedCharacterData.name) {
+        gotoPageBtn.disabled = false;
+        gotoPageBtn.style.opacity = '1';
+        gotoPageBtn.style.pointerEvents = 'auto';
+        gotoPageBtn.style.display = 'block'; 
+
+    } else {
+        gotoPageBtn.disabled = true;
+        gotoPageBtn.style.opacity = '0.5';
+        gotoPageBtn.style.pointerEvents = 'none';
+        gotoPageBtn.style.display = 'none'; 
+    }
+}
+
+
+updateButtonState();
 
 
 const characters = [
@@ -121,6 +144,7 @@ searchInput.addEventListener('input', function(){
     gotoPageBtn.disabled = true;
     gotoPageBtn.style.opacity = '0.5';
     gotoPageBtn.style.pointerEvents = 'none';
+    gotoPageBtn.style.display = 'none'
     selectedCharacterData = null; 
 
     if (searchTerm.length === 0){
@@ -156,7 +180,11 @@ searchInput.addEventListener('input', function(){
                 selectedCharImage.src = charObj.image;
                 selectedCharImage.alt = charObj.name;
                 selectedCharName.textContent = charObj.name;
-                selectedCharDisplay.style.display = 'flex'; 
+                selectedCharDisplay.style.display = 'flex';
+                
+                 selectedCharacterData = charObj; 
+                updateButtonState(); 
+          
 
                 selectedCharacterData = charObj;
                 gotoPageBtn.disabled = false;
