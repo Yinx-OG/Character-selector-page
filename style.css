@@ -1,0 +1,189 @@
+body{
+    background-color: white;
+    color: #333;
+
+    font-family: 'Electrolize', sans-serif;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+
+    transition: background-image 1s ease-in-out;
+}
+
+.dawn-bg{
+    background-image: url('bg_img/dawn_bg.jpg');
+    color: #2c3e50;
+}
+
+.day-bg{
+    background-image: url('bg_img/day_bg.jpg');
+    color: #34495e;
+}
+
+.dusk-bg{
+    background-image: url('bg_img/dusk_bg.jpg');
+    color: #34495e;
+}
+
+.night-bg{
+    background-image: url('bg_img/night_bg.jpg');
+    color: #2c3e50;
+}
+
+.logo{
+    transform: translateY(-60px);
+    width: auto; height: auto; max-width: 15%;
+}
+
+.character-selector{
+    position: relative;
+    width: 90%;
+    max-width: 580px;
+    margin-top: 1px;
+    transform: translateY(-40px);
+}
+
+.search-input{
+    font-family: 'Electrolize', sans-serif;
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.search-input:focus{
+    border-color: darkgray;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-input::placeholder{
+    color: #80868b;
+    opacity: 1;
+}
+
+.suggestions-dropdown{
+    position: absolute;
+    transform: translateX(20px);
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #dfe1e5;
+    border-top: none;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none;
+    text-align: left;
+    padding: 5px 0;
+}
+
+.suggestion-item{
+    display: flex;
+    align-items: center;
+    font-family: 'Electrolize', sans-serif;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.suggestion-item img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.selected-character-display {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.2); 
+    border-radius: 24px; 
+    color: var(--body-color, #ecf0f1); 
+    font-size: 1.4em; 
+    font-weight: bold;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 580px;
+    transform: translateY(-20px);
+    
+    transition: all 0.3s ease-in-out;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    font-family: 'Electrolize', sans-serif; 
+    
+}
+
+.selected-char-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.suggestions-item:hover,
+.suggestions-item.active{
+    background-color: #f0f0f0;
+}
+
+.goto-page-button {
+    margin-top: 30px;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    opacity: 0.5;
+    pointer-events: none;
+    transform: translateY(-40px); 
+    font-family: 'Electrolize', sans-serif; 
+}
+
+.goto-page-button:hover:not([disabled]) { 
+    background-color: #45a049;
+    transform: translateY(-42px); 
+}
+
+.goto-page-button[disabled] {
+    cursor: not-allowed; 
+    opacity: 0.3; 
+}
+
+h1{
+    font-family: 'Electrolize', sans-serif;
+    font-size: 3em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
