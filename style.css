@@ -199,6 +199,7 @@ body{
 }
 
 .goto-page-button:hover:not([disabled]) {
+    transform: translateY(-72px);
     background-color: #45a049;
     /* Removed transform here as base transform is kept static for consistency */
 }
